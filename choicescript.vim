@@ -68,7 +68,7 @@ syn match choicescriptError '\*bug'
 syn keyword choicescriptBoolean true
 syn keyword choicescriptBoolean false
 
-syn match choicescriptPipe '|'
+syn match choicescriptPipe contained '|'
 
 syn region choicescriptInternalInterpolation start="\$!\{,2}{" skip="\\}" end="}" transparent contains=choicescriptConditionalInterpolation
 syn region choicescriptInterpolation start="\$!\{,2}{" skip="\\}" end="}"

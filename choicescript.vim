@@ -27,18 +27,21 @@ syn match choicescriptFlowControl '\*elseif'
 
 syn match choicescriptCommands '\*set'
 syn match choicescriptCommands '\*temp'
+syn match choicescriptCommands '\*params'
 syn match choicescriptCommands '\*rand'
-syn match choicescriptCommands '\*page_break'
-syn match choicescriptCommands '\*line_break'
-syn match choicescriptCommands '\*stat_chart'
 syn match choicescriptCommands '\*finish'
 syn match choicescriptCommands '\*ending'
 syn match choicescriptCommands '\*achieve'
 syn match choicescriptCommands '\*achievement'
 syn match choicescriptCommands '\*check_achievements'
-syn match choicescriptCommands '\*image'
 syn match choicescriptCommands '\*input_text'
 syn match choicescriptCommands '\*input_number'
+
+syn match choicescriptPageLayout '\*page_break'
+syn match choicescriptPageLayout '\*line_break'
+syn match choicescriptPageLayout '\*stat_chart'
+syn match choicescriptPageLayout '\*text_image'
+syn match choicescriptPageLayout '\*image'
 
 syn match choicescriptSetup '\*title'
 syn match choicescriptSetup '\*author'
@@ -72,17 +75,21 @@ syn match choicescriptPipe contained '|'
 
 syn region choicescriptInternalInterpolation start="\$!\{,2}{" skip="\\}" end="}" transparent contains=choicescriptConditionalInterpolation
 syn region choicescriptInterpolation start="\$!\{,2}{" skip="\\}" end="}"
-syn region choicescriptConditionalInterpolation start="@{" skip="\\}" end="}" contains=choicescriptInterpolation,choicescriptPipe
+syn region choicescriptConditionalInterpolation start="@{" skip="\\}" end="}" contains=choicescriptInterpolation,choicescriptPipe,choicescriptConditional,choicescriptBold,choicescriptItalic,choicescriptItalicBold,choicescriptBoldItalic
 
 syn region choicescriptBold matchgroup=choicescriptOption start="\[b\]" end="\[/b\]" contains=choicescriptBoldItalic,choicescriptInterpolation
 syn region choicescriptItalic matchgroup=choicescriptOption start="\[i\]" end="\[/i\]" contains=choicescriptItalicBold,choicescriptInterpolation
 syn region choicescriptItalicBold matchgroup=choicescriptOption start="\[b\]" end="\[/b\]" contains=choicescriptInterpolation contained
 syn region choicescriptBoldItalic matchgroup=choicescriptOption start="\[i\]" end="\[/i\]" contains=choicescriptInterpolation contained
 
-highlight Exception ctermfg=red guifg=red
-highlight choicescriptConditionalInterpolation ctermfg=darkgreen guifg=darkgreen cterm=bold gui=bold
+" this could be more thoroughly checked for matching parens but I think it's
+" okay
+syn region choicescriptConditional start="(" end=")" contains=choicescriptConditional
+
+"highlight choicescriptConditionalInterpolation ctermfg=darkgreen guifg=darkgreen cterm=bold gui=bold
+highlight choicescriptConditionalInterpolation ctermfg=darkgreen guifg=darkgreen
 highlight choicescriptPipe ctermfg=blue guifg=blue cterm=bold gui=bold
-highlight choicescriptConditional ctermfg=blue guifg=blue cterm=bold gui=bold
+highlight choicescriptConditional ctermfg=134 guifg=MediumOrchid
 
 hi def link choicescriptComments        Comment
 hi def link choicescriptCommands        Identifier
@@ -90,10 +97,11 @@ hi def link choicescriptLabels          Constant
 hi def link choicescriptOption          String
 hi def link choicescriptChoice          Conditional
 hi def link choicescriptFlowControl     Conditional
-hi def link choicescriptError           Exception
+hi def link choicescriptError           Error
 hi def link choicescriptInterpolation   Statement
 hi def link choicescriptSetup           PreProc
 hi def link choicescriptBoolean         Boolean
+hi def link choicescriptPageLayout      Special
 
 hi link choicescriptBoldItalic choicescriptItalicBold
 
